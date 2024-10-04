@@ -55,7 +55,7 @@ pipeline {
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace dev --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/cast-service -n dev; then
+                    if ! kubectl rollout status deployment/cast-service-cast-service -n dev && ! kubectl rollout status deployment/cast-service-db -n dev; then
                         echo "Deployment failed. Rolling back..."
                         helm rollback cast-service -n dev
                         exit 1
