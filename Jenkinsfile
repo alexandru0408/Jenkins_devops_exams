@@ -50,12 +50,12 @@ pipeline {
                     cat $KUBECONFIG > .kube/config
 
                     # Deploy cast-service
-                    cp castapp-chart/values-dev.yaml values-cast.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart/values-dev.yaml values-cast.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-cast.yaml
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace dev
 
                     # Deploy movie-service
-                    cp movieapp-chart/values-dev.yaml values-movie.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-dev.yaml values-movie.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace dev
                     '''
@@ -78,14 +78,14 @@ pipeline {
                     cat $KUBECONFIG > .kube/config
 
                     # Deploy cast-service
-                    cp castapp-chart/values-staging.yaml values-cast.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart/values-staging.yaml values-cast.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-cast.yaml
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace staging
 
                     # Deploy movie-service
-                    cp movieapp-chart/values-staging.yaml values-movie.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-staging.yaml values-movie.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
-                    helm upgrade --install /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart movieapp-chart --values=values-movie.yaml --namespace staging
+                    helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace staging
                     '''
                 }
             }
@@ -111,12 +111,12 @@ pipeline {
                     cat $KUBECONFIG > .kube/config
 
                     # Deploy cast-service
-                    cp castapp-chart/values-prod.yaml values-cast.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart/values-prod.yaml values-cast.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-cast.yaml
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace prod
 
                     # Deploy movie-service
-                    cp movieapp-chart/values-prod.yaml values-movie.yaml
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-prod.yaml values-movie.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace prod
                     '''
