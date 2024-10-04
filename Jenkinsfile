@@ -22,7 +22,7 @@ pipeline {
 
         stage('Docker Push') { // Push built images to DockerHub
             environment {
-                DOCKER_PASS = credentials("DOCKER_HUB_PASS") // Docker password saved in Jenkins credentials
+                DOCKER_PASS = credentials("DOCKER_PASS") // Docker password saved in Jenkins credentials
             }
             steps {
                 script {
