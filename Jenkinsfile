@@ -52,7 +52,14 @@ pipeline {
                     # Deploy cast-service
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart/values-dev.yaml values-cast.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-cast.yaml
-                    helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace dev
+                    helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace dev --create-namespace || true
+
+                    # Check if the deployment was successful
+                    if ! kubectl rollout status deployment/cast-service -n dev; then
+                        echo "Deployment failed. Rolling back..."
+                        helm rollback cast-service -n dev
+                        exit 1
+                    fi
 
                     # Deploy movie-service
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-dev.yaml values-movie.yaml
