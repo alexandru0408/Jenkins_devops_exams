@@ -36,9 +36,9 @@ pipeline {
         }
 
         stage('Deployment on dev') {
-            when {
-                branch 'dev' // Deploy only when changes are pushed to the 'dev' branch
-            }
+            // when {
+            //     branch 'dev' // Deploy only when changes are pushed to the 'dev' branch
+            // }
             environment {
                 KUBECONFIG = credentials("config") // Retrieve kubeconfig from Jenkins credentials
             }
@@ -64,9 +64,9 @@ pipeline {
         }
 
         stage('Deployment on staging') {
-            when {
-                branch 'staging' // Deploy only when changes are pushed to the 'staging' branch
-            }
+            // when {
+            //     branch 'staging' // Deploy only when changes are pushed to the 'staging' branch
+            // }
             environment {
                 KUBECONFIG = credentials("config") // Retrieve kubeconfig from Jenkins credentials
             }
@@ -92,9 +92,9 @@ pipeline {
         }
 
         stage('Deployment on prod') {
-            when {
-                branch 'main' // Deploy only when changes are pushed to the 'main' branch
-            }
+            // when {
+            //     branch 'main' // Deploy only when changes are pushed to the 'main' branch
+            // }
             environment {
                 KUBECONFIG = credentials("config") // Retrieve kubeconfig from Jenkins credentials
             }
