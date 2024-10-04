@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.database.name }}
+  labels:
+    app: {{ .Release.Name }}-{{ .Values.database.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Values.database.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Values.database.name }}
+    spec:
+      containers:
+        - name: {{ .Values.database.name }}
+          image: {{ .Values.database.image }}
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.database.db }}
+            - name: POSTGRES_USER
+              value: {{ .Values.database.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.database.password }}
+          volumeMounts:
+            - name: {{ .Values.database.name }}-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: {{ .Values.database.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.database.name }}-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-movie-service
+  labels:
+    app: {{ .Release.Name }}-movie-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-movie-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-movie-service
+    spec:
+      containers:
+        - name: movie-service
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: CAST_SERVICE_HOST_URL
+              value: {{ .Values.castServiceUrl }}
+            - name: DATABASE_URI
+              value: "postgresql://{{ .Values.database.user }}:{{ .Values.database.password }}@{{ .Release.Name }}-{{ .Values.database.name }}/{{ .Values.database.db }}"
+          volumeMounts:
+            - name: movie-service-claim0
+              mountPath: /app
+          resources: {{ .Values.resources | toYaml }}
+      volumes:
+        - name: movie-service-claim0
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-movie-service-pvc

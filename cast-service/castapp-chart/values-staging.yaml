@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: alex0489/cast-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+database:
+  image: postgres:12.1-alpine
+  name: cast-db
+  user: cast_db_username
+  password: cast_db_password
+  db: cast_db_dev
+  pvcSize: 100Mi
+
+service:
+  type: ClusterIP
+  port: 8002
+  targetPort: 8000
+
+resources: {}
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 100Mi
+
+namespace: staging
