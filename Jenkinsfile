@@ -6,6 +6,7 @@ pipeline {
         DOCKER_TAG = "v.${BUILD_ID}.0" // Tagging with the build number for unique identification
     }
     agent any 
+    stages {  // Begin stages block
         stage('Docker Build') { // Docker build images stage
             steps {
                 script {
@@ -122,5 +123,5 @@ pipeline {
                 }
             }
         }
-    }
-}
+    } // End stages block
+} // End pipeline block
