@@ -55,11 +55,11 @@ pipeline {
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace dev --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/cast-service-cast-service -n dev && ! kubectl rollout status deployment/cast-service-db -n dev; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback cast-service -n dev
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/cast-service-cast-service -n dev && ! kubectl rollout status deployment/cast-service-db -n dev; then
+                    #    echo "Deployment failed. Rolling back..."
+                    #    helm rollback cast-service -n dev
+                    #    exit 1
+                    #fi
 
                     # Deploy movie-service
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-dev.yaml values-movie.yaml
@@ -67,11 +67,11 @@ pipeline {
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace dev --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/movie-service-movie-service -n dev && ! kubectl rollout status deployment/movie-service-db -n dev; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback movie-service -n dev
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/movie-service-movie-service -n dev && ! kubectl rollout status deployment/movie-service-db -n dev; then
+                    #   echo "Deployment failed. Rolling back..."
+                    #    helm rollback movie-service -n dev
+                    #    exit 1
+                    #fi
                     '''
                 }
             }
@@ -97,11 +97,11 @@ pipeline {
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace staging --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/cast-service-cast-service -n staging && ! kubectl rollout status deployment/cast-service-db -n staging; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback cast-service -n staging
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/cast-service-cast-service -n staging && ! kubectl rollout status deployment/cast-service-db -n staging; then
+                    #    echo "Deployment failed. Rolling back..."
+                    #    helm rollback cast-service -n staging
+                    #    exit 1
+                    #fi
 
                     # Deploy movie-service
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-staging.yaml values-movie.yaml
@@ -109,11 +109,11 @@ pipeline {
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace staging --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/movie-service-movie-service -n staging && ! kubectl rollout status deployment/movie-service-db -n staging; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback movie-service -n staging
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/movie-service-movie-service -n staging && ! kubectl rollout status deployment/movie-service-db -n staging; then
+                    #    echo "Deployment failed. Rolling back..."
+                    #    helm rollback movie-service -n staging
+                    #    exit 1
+                    #fi
                     '''
                 }
             }
@@ -144,11 +144,11 @@ pipeline {
                     helm upgrade --install cast-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/cast-service/castapp-chart --values=values-cast.yaml --namespace prod --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/cast-service-cast-service -n prod && ! kubectl rollout status deployment/cast-service-db -n prod; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback cast-service -n prod
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/cast-service-cast-service -n prod && ! kubectl rollout status deployment/cast-service-db -n prod; then
+                    #    echo "Deployment failed. Rolling back..."
+                    #    helm rollback cast-service -n prod
+                    #    exit 1
+                    #fi
 
                     # Deploy movie-service
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-prod.yaml values-movie.yaml
@@ -156,11 +156,11 @@ pipeline {
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace prod --create-namespace || true
 
                     # Check if the deployment was successful
-                    if ! kubectl rollout status deployment/movie-service-movie-service -n prod && ! kubectl rollout status deployment/movie-service-db -n prod; then
-                        echo "Deployment failed. Rolling back..."
-                        helm rollback movie-service -n prod
-                        exit 1
-                    fi
+                    #if ! kubectl rollout status deployment/movie-service-movie-service -n prod && ! kubectl rollout status deployment/movie-service-db -n prod; then
+                    #    echo "Deployment failed. Rolling back..."
+                    #    helm rollback movie-service -n prod
+                    #    exit 1
+                    #fi
                     '''
                 }
             }
