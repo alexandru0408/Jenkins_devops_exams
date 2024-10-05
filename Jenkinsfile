@@ -66,6 +66,10 @@ pipeline {
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace dev --create-namespace || true
 
+                    # Deploy nginx-service
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart/values-dev.yaml values-nginx.yaml
+                    helm upgrade --install nginx-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart --values=values-nginx.yaml --namespace dev --create-namespace || true
+
                     # Check if the deployment was successful
                     #if ! kubectl rollout status deployment/movie-service-movie-service -n dev && ! kubectl rollout status deployment/movie-service-db -n dev; then
                     #   echo "Deployment failed. Rolling back..."
@@ -107,6 +111,11 @@ pipeline {
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-staging.yaml values-movie.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace staging --create-namespace || true
+
+                    # Deploy nginx-service
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart/values-staging.yaml values-nginx.yaml
+                    helm upgrade --install nginx-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart --values=values-nginx.yaml --namespace staging --create-namespace || true
+
 
                     # Check if the deployment was successful
                     #if ! kubectl rollout status deployment/movie-service-movie-service -n staging && ! kubectl rollout status deployment/movie-service-db -n staging; then
@@ -154,6 +163,10 @@ pipeline {
                     cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart/values-prod.yaml values-movie.yaml
                     sed -i "s+tag:.*+tag: ${DOCKER_TAG}+g" values-movie.yaml
                     helm upgrade --install movie-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/movie-service/movieapp-chart --values=values-movie.yaml --namespace prod --create-namespace || true
+
+                    # Deploy nginx-service
+                    cp /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart/values-prod.yaml values-nginx.yaml
+                    helm upgrade --install nginx-service /home/ubuntu/jenkins_EVAL/Jenkins_devops_exams/nginxapp-chart --values=values-nginx.yaml --namespace prod --create-namespace || true
 
                     # Check if the deployment was successful
                     #if ! kubectl rollout status deployment/movie-service-movie-service -n prod && ! kubectl rollout status deployment/movie-service-db -n prod; then
